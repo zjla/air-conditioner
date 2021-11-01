@@ -1,14 +1,12 @@
-import "./App.scss";
+import React, { useEffect } from 'react'
+import './App.scss'
 
-import { ThemeProvider } from "./theme";
-import Container from "@material-ui/core/Container";
+import { HashRouter as Router, Switch, Route } from 'react-router-dom'
+import pkg from '../package.json'
+import { AppTheme } from './theme'
 
-import { HashRouter as Router, Switch, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Rc from "./pages/Rc";
-import { useEffect } from "react";
-
-import pkg from "../package.json";
+import Home from './pages/Home'
+import Rc from './pages/Rc'
 
 /**
  * 控制台输出信息
@@ -20,37 +18,40 @@ import pkg from "../package.json";
 function consoleInfo(
   name: string,
   link: string,
-  color = "#0078E7",
-  emoji = "☁️"
+  color = '#0078E7',
+  emoji = '☁️',
 ) {
   console.log(
     `%c ${emoji} ${name} %c ${link}`,
     `color: white; background: ${color}; padding:5px 0;`,
-    `padding:4px;border:1px solid ${color};`
-  );
+    `padding:4px;border:1px solid ${color};`,
+  )
 }
 
-function App() {
+const App: React.FC = () => {
   useEffect(() => {
-    consoleInfo(pkg.name, pkg.repository.url);
-    consoleInfo("@" + pkg.author.name, pkg.author.url);
-  }, []);
+    consoleInfo(pkg.name, pkg.repository.url)
+    consoleInfo(`@${pkg.author.name}`, pkg.author.url)
+  }, [])
+
   return (
-    <ThemeProvider>
-      <Container maxWidth="sm">
-        <Router>
-          <Switch>
-            <Route path="/rc">
-              <Rc />
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
-          </Switch>
-        </Router>
-      </Container>
-    </ThemeProvider>
-  );
+    <AppTheme>
+      <main className="text-gray-700 dark:text-gray-200 p-2">
+        <div className="max-w-600px m-auto">
+          <Router>
+            <Switch>
+              <Route path="/rc">
+                <Rc />
+              </Route>
+              <Route path="/">
+                <Home />
+              </Route>
+            </Switch>
+          </Router>
+        </div>
+      </main>
+    </AppTheme>
+  )
 }
 
-export default App;
+export default App

@@ -1,50 +1,48 @@
-import { makeStyles } from "@material-ui/styles";
-import Typography from "@material-ui/core/Typography";
-import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
-import { jumpToAdsense, adsenseLink } from "../features/adsense";
-import { Theme } from "@material-ui/core";
-
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    margin: 24,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-}));
+import React from 'react'
+import EmojiObjectsOutlinedIcon from '@mui/icons-material/EmojiObjectsOutlined'
+import { jumpToAdsense, adsenseLink } from '../features/adsense'
 
 /**
  * 喜马拉雅链接
  * @param props
  * @returns
  */
-function AdsenseLink(props: { text: string }) {
+const AdsenseLink: React.FC<{ text: string }> = (props) => {
   return (
     <a
       className="adsense-text-link"
       href={adsenseLink}
       target="_blank"
       onClick={() => {
-        jumpToAdsense();
-      }}
+        jumpToAdsense()
+      }} rel="noreferrer"
     >
-      {props.text || "喜马拉雅"}
+      {props.text || '喜马拉雅'}
     </a>
-  );
+  )
 }
 
-export default function ProTip() {
-  const classes = useStyles();
+export const ProTip: React.FC = () => {
   return (
-    <Typography align="center" className={classes.root} color="textSecondary">
+    <p
+      className="text-center"
+      style={{
+        margin: 24,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
       <EmojiObjectsOutlinedIcon />
       Tip: 为你的夏日带去
-      {process.env.REACT_APP_DISABLE_ADSENSE ? (
-        "清凉"
-      ) : (
-        <AdsenseLink text="清凉" />
-      )}
+      {import.meta.env.VITE_DISABLE_ADSENSE
+        ? (
+          '清凉'
+        )
+        : (
+          <AdsenseLink text="清凉" />
+        )}
       ！
-    </Typography>
-  );
+    </p>
+  )
 }
